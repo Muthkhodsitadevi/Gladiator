@@ -1,0 +1,17 @@
+{
+	"name": "ExcelSourceLS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\Users\\Dell\\Desktop\\LTI\\Project Gladiator\\",
+			"userId": "Dell",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4NmEzZmQ3MS0xYjg3LTQyYjMtYTBhNS03ZWYxZmQ5ZTgxMjIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SiyazIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
