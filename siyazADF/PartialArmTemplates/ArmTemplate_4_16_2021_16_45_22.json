@@ -6,137 +6,12 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "siyazADF"
-		},
-		"SinkLS_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SinkLS'"
-		},
-		"ExcelSourceLS_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'ExcelSourceLS'"
-		},
-		"ExcelSourceLS_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "C:\\Users\\Dell\\Desktop\\LTI\\Project Gladiator\\"
-		},
-		"ExcelSourceLS_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "Dell"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/SinkLS')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('SinkLS_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SiyazIR')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQLDestination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SinkLS",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tableName": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": {
-						"value": "@dataset().tableName",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SinkLS')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ExcelSourceLS')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('ExcelSourceLS_properties_typeProperties_host')]",
-					"userId": "[parameters('ExcelSourceLS_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('ExcelSourceLS_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "SiyazIR",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/SiyazIR')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SalesQualityMgt')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ExcelSourceLS",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"sheet": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": {
-						"value": "@dataset().sheet",
-						"type": "Expression"
-					},
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "SupplyQualityAnalysis.xlsx"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ExcelSourceLS')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Gladiator')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -278,11 +153,7 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SinkLS')]",
-				"[concat(variables('factoryId'), '/datasets/SalesQualityMgt')]",
-				"[concat(variables('factoryId'), '/datasets/SQLDestination')]"
-			]
+			"dependsOn": []
 		}
 	]
 }
