@@ -7,7 +7,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Stored procedure1",
+						"activity": "Truncate all tables",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -84,7 +84,7 @@
 				}
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "Truncate all tables",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [],
 				"policy": {
